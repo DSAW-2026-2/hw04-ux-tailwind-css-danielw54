@@ -29,7 +29,6 @@
 
   <div class="flex min-h-screen">
 
-    <!-- ==================== SIDEBAR ==================== -->
 
     <aside class="hidden w-32 shrink-0 bg-[#5a3a5b] text-white sm:block lg:w-36">
 
@@ -41,7 +40,6 @@
         </div>
       </div>
 
-      <!-- Navigation -->
       <nav class="p-3" aria-label="Navegación principal">
 
         <ul class="space-y-3">
@@ -123,7 +121,6 @@
       </nav>
     </aside>
 
-    <!-- ==================== CONTENIDO ==================== -->
 
     <div class="flex min-w-0 flex-1 flex-col">
 
@@ -146,7 +143,6 @@
             <span id="theme-icon">🌙</span>
           </button>
 
-          <!-- Avatar -->
           <div class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-black bg-orange-100 text-lg">
             👨🏻‍💻
           </div>
@@ -154,13 +150,9 @@
         </div>
       </header>
 
-      <!-- ==================== MAIN ==================== -->
 
       <main class="flex-1 p-3 sm:p-5 lg:p-6">
 
-        <!-- ================================================= -->
-        <!-- DASHBOARD - DATOS -->
-        <!-- ================================================= -->
 
         <section id="dashboard-data" class="view">
 
@@ -168,7 +160,6 @@
             Resumen de la semana
           </h2>
 
-          <!-- Statistics -->
           <div class="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 
             <article class="rounded-md bg-[#c9e5bd] p-4 dark:bg-green-950">
@@ -217,10 +208,8 @@
 
           </div>
 
-          <!-- Inventory + Reminders -->
           <div class="grid gap-5 lg:grid-cols-3">
 
-            <!-- Inventory -->
             <article class="rounded-md border border-slate-400 bg-[#e5e9ec] p-3 dark:border-slate-600 dark:bg-slate-800 lg:col-span-2">
 
               <div class="mb-4 flex items-center justify-between gap-3">
@@ -296,7 +285,6 @@
 
             </article>
 
-            <!-- Reminders -->
             <article class="rounded-md border border-slate-400 bg-[#e5e9ec] p-3 dark:border-slate-600 dark:bg-slate-800">
 
               <h2 class="mb-4 text-lg font-medium">
@@ -336,7 +324,6 @@
 
           </div>
 
-          <!-- Quick actions -->
           <div class="mt-5 grid gap-5 md:grid-cols-2">
 
             <article class="rounded-md border border-slate-400 bg-[#e5e9ec] p-4 dark:border-slate-600 dark:bg-slate-800">
@@ -370,9 +357,6 @@
         </section>
 
 
-        <!-- ================================================= -->
-        <!-- DASHBOARD - VACÍO -->
-        <!-- ================================================= -->
 
         <section id="dashboard-empty" class="view hidden">
 
@@ -443,9 +427,6 @@
         </section>
 
 
-        <!-- ================================================= -->
-        <!-- DASHBOARD - ERROR -->
-        <!-- ================================================= -->
 
         <section id="dashboard-error" class="view hidden">
 
@@ -475,9 +456,6 @@
         </section>
 
 
-        <!-- ================================================= -->
-        <!-- INVENTARIO - DATOS -->
-        <!-- ================================================= -->
 
         <section id="inventory-data" class="view hidden">
 
@@ -564,9 +542,6 @@
         </section>
 
 
-        <!-- ================================================= -->
-        <!-- INVENTARIO - VACÍO -->
-        <!-- ================================================= -->
 
         <section id="inventory-empty" class="view hidden">
 
@@ -613,10 +588,6 @@
         </section>
 
 
-        <!-- ================================================= -->
-        <!-- INVENTARIO - ERROR -->
-        <!-- ================================================= -->
-
         <section id="inventory-error" class="view hidden">
 
           <h2 class="mb-4 text-xl font-bold">
@@ -644,10 +615,6 @@
 
         </section>
 
-
-        <!-- ================================================= -->
-        <!-- VENTAS - DATOS -->
-        <!-- ================================================= -->
 
         <section id="sales-data" class="view hidden">
 
@@ -736,9 +703,6 @@
         </section>
 
 
-        <!-- ================================================= -->
-        <!-- VENTAS - VACÍO -->
-        <!-- ================================================= -->
 
         <section id="sales-empty" class="view hidden">
 
@@ -785,9 +749,6 @@
         </section>
 
 
-        <!-- ================================================= -->
-        <!-- VENTAS - ERROR -->
-        <!-- ================================================= -->
 
         <section id="sales-error" class="view hidden">
 
@@ -829,13 +790,7 @@
   </div>
 
 
-  <!-- ==================== JAVASCRIPT ==================== -->
-
   <script>
-
-    /* ============================
-       CAMBIO DE VISTAS
-    ============================ */
 
     const views = document.querySelectorAll(".view");
     const navButtons = document.querySelectorAll(".nav-button");
@@ -868,10 +823,6 @@
     }
 
 
-    /* ============================
-       NAVEGACIÓN
-    ============================ */
-
     navButtons.forEach(function(button) {
 
       button.addEventListener("click", function() {
@@ -884,10 +835,6 @@
 
     });
 
-
-    /* ============================
-       DARK MODE
-    ============================ */
 
     const themeToggle = document.getElementById("theme-toggle");
     const themeIcon = document.getElementById("theme-icon");
@@ -924,10 +871,6 @@
 
     });
 
-
-    /* ============================
-       VISTA INICIAL
-    ============================ */
 
     showView("dashboard-data");
 
