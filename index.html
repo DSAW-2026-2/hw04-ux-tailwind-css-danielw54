@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mi negocio - Gestor Integral</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: "class"
+    };
+  </script>
+
+  <script>
+    if (
+      localStorage.getItem("theme") === "dark" ||
+      (!localStorage.getItem("theme") &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    }
+  </script>
+</head>
+
+<body class="min-h-screen bg-[#f5f5f5] text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-white">
+
+  <div class="flex min-h-screen">
+
+    <!-- ==================== SIDEBAR ==================== -->
+
+    <aside class="hidden w-32 shrink-0 bg-[#5a3a5b] text-white sm:block lg:w-36">
+
+      <!-- Logo -->
+      <div class="flex h-[64px] items-center justify-center border-b border-black/20 px-2">
+        <div class="text-center">
+          <div class="text-2xl">🏪</div>
+          <p class="text-xs font-bold lg:text-sm">Mi negocio</p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="p-3" aria-label="Navegación principal">
+
+        <ul class="space-y-3">
+
+          <li>
+            <button
+              type="button"
+              data-view="dashboard-data"
+              class="nav-button flex w-full flex-col items-center justify-center rounded-sm bg-[#92278f] px-2 py-3 text-xs font-medium transition hover:bg-[#a83ba5]"
+            >
+              <span class="mb-1 text-2xl">⌂</span>
+              Inicio
+            </button>
+          </li>
+
+          <li>
+            <button
+              type="button"
+              data-view="inventory-data"
+              class="nav-button flex w-full flex-col items-center justify-center rounded-sm border border-[#92278f] px-2 py-3 text-xs font-medium transition hover:bg-[#92278f]"
+            >
+              <span class="mb-1 text-2xl">📦</span>
+              Inventario
+            </button>
+          </li>
+
+          <li>
+            <button
+              type="button"
+              data-view="sales-data"
+              class="nav-button flex w-full flex-col items-center justify-center rounded-sm border border-[#92278f] px-2 py-3 text-xs font-medium transition hover:bg-[#92278f]"
+            >
+              <span class="mb-1 text-2xl">🛒</span>
+              Ventas
+            </button>
+          </li>
+
+          <li>
+            <button
+              type="button"
+              class="flex w-full flex-col items-center justify-center rounded-sm border border-[#92278f] px-2 py-3 text-xs font-medium transition hover:bg-[#92278f]"
+            >
+              <span class="mb-1 text-2xl">💰</span>
+              Gastos
+            </button>
+          </li>
+
+          <li>
+            <button
+              type="button"
+              class="flex w-full flex-col items-center justify-center rounded-sm border border-[#92278f] px-2 py-3 text-xs font-medium transition hover:bg-[#92278f]"
+            >
+              <span class="mb-1 text-2xl">🔔</span>
+              Recordatorios
+            </button>
+          </li>
+
+          <li>
+            <button
+              type="button"
+              class="flex w-full flex-col items-center justify-center rounded-sm border border-[#92278f] px-2 py-3 text-xs font-medium transition hover:bg-[#92278f]"
+            >
+              <span class="mb-1 text-2xl">📊</span>
+              Reportes
+            </button>
+          </li>
+
+          <li>
+            <button
+              type="button"
+              class="flex w-full flex-col items-center justify-center rounded-sm border border-[#92278f] px-2 py-3 text-xs font-medium transition hover:bg-[#92278f]"
+            >
+              <span class="mb-1 text-2xl">⚙️</span>
+              Configuración
+            </button>
+          </li>
+
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- ==================== CONTENIDO ==================== -->
+
+    <div class="flex min-w-0 flex-1 flex-col">
+
+      <!-- Header -->
+      <header class="flex h-[64px] items-center justify-between border-b border-[#8d6a8d] bg-white px-4 dark:border-slate-700 dark:bg-slate-900 sm:px-6">
+
+        <h1 class="text-sm font-bold sm:text-base lg:text-lg">
+          Gestor Integral para Pequeños Negocios
+        </h1>
+
+        <div class="flex items-center gap-3">
+
+          <!-- Dark mode -->
+          <button
+            id="theme-toggle"
+            type="button"
+            class="rounded-full border border-slate-300 bg-slate-100 px-3 py-2 text-sm transition hover:bg-slate-200 dark:border-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700"
+            aria-label="Cambiar modo"
+          >
+            <span id="theme-icon">🌙</span>
+          </button>
+
+          <!-- Avatar -->
+          <div class="flex h-9 w-9 items-center justify-center rounded-full border-2 border-black bg-orange-100 text-lg">
+            👨🏻‍💻
+          </div>
+
+        </div>
+      </header>
+
+      <!-- ==================== MAIN ==================== -->
+
+      <main class="flex-1 p-3 sm:p-5 lg:p-6">
+
+        <!-- ================================================= -->
+        <!-- DASHBOARD - DATOS -->
+        <!-- ================================================= -->
+
+        <section id="dashboard-data" class="view">
+
+          <h2 class="mb-4 text-xl font-medium">
+            Resumen de la semana
+          </h2>
+
+          <!-- Statistics -->
+          <div class="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+
+            <article class="rounded-md bg-[#c9e5bd] p-4 dark:bg-green-950">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="text-sm">Ingresos</p>
+                  <p class="mt-2 font-medium">$1'000.000</p>
+                  <p class="mt-3 text-xs">Total ingresos</p>
+                </div>
+                <span class="text-2xl">💵</span>
+              </div>
+            </article>
+
+            <article class="rounded-md bg-[#efb8bc] p-4 dark:bg-red-950">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="text-sm">Gastos</p>
+                  <p class="mt-2 font-medium">$620.000</p>
+                  <p class="mt-3 text-xs">Total gastos</p>
+                </div>
+                <span class="text-2xl">💰</span>
+              </div>
+            </article>
+
+            <article class="rounded-md bg-[#b8dce4] p-4 dark:bg-cyan-950">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="text-sm">Ganancia</p>
+                  <p class="mt-2 font-medium">$1'000.000</p>
+                  <p class="mt-3 text-xs">Resultado neto</p>
+                </div>
+                <span class="text-2xl">📈</span>
+              </div>
+            </article>
+
+            <article class="rounded-md bg-[#e7efb7] p-4 dark:bg-yellow-950">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="text-sm">Ventas</p>
+                  <p class="mt-2 font-medium">24</p>
+                  <p class="mt-3 text-xs">Ventas realizadas</p>
+                </div>
+                <span class="text-2xl">🛒</span>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Inventory + Reminders -->
+          <div class="grid gap-5 lg:grid-cols-3">
+
+            <!-- Inventory -->
+            <article class="rounded-md border border-slate-400 bg-[#e5e9ec] p-3 dark:border-slate-600 dark:bg-slate-800 lg:col-span-2">
+
+              <div class="mb-4 flex items-center justify-between gap-3">
+                <h2 class="text-lg font-medium">Inventario</h2>
+
+                <button
+                  type="button"
+                  class="rounded-sm bg-[#61aebe] px-3 py-2 text-xs text-white hover:bg-[#4d96a5]"
+                >
+                  + Agregar producto
+                </button>
+              </div>
+
+              <input
+                type="search"
+                placeholder="Buscar producto..."
+                class="mb-5 w-full max-w-xs rounded-sm border-0 bg-white px-3 py-2 text-sm outline-none dark:bg-slate-900"
+              >
+
+              <div class="overflow-x-auto rounded-md border border-slate-400 bg-[#dfe3e6] dark:border-slate-600 dark:bg-slate-900">
+
+                <table class="w-full min-w-[500px] text-sm">
+
+                  <thead>
+                    <tr class="border-b border-slate-500">
+                      <th class="px-3 py-3 text-left font-medium">Producto</th>
+                      <th class="px-3 py-3 text-left font-medium">Stock</th>
+                      <th class="px-3 py-3 text-left font-medium">Estado</th>
+                      <th class="px-3 py-3 text-left font-medium">Precio</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+
+                    <tr class="border-b border-slate-400">
+                      <td class="px-3 py-3">Café</td>
+                      <td class="px-3 py-3">25</td>
+                      <td class="px-3 py-3">
+                        <span class="rounded bg-green-300 px-2 py-1 text-green-800">
+                          Disponible
+                        </span>
+                      </td>
+                      <td class="px-3 py-3">$20.000</td>
+                    </tr>
+
+                    <tr class="border-b border-slate-400">
+                      <td class="px-3 py-3">Azúcar</td>
+                      <td class="px-3 py-3">10</td>
+                      <td class="px-3 py-3">
+                        <span class="rounded bg-red-400 px-2 py-1 text-red-900">
+                          Bajo
+                        </span>
+                      </td>
+                      <td class="px-3 py-3">$5.000</td>
+                    </tr>
+
+                    <tr>
+                      <td class="px-3 py-3">Leche</td>
+                      <td class="px-3 py-3">50</td>
+                      <td class="px-3 py-3">
+                        <span class="rounded bg-green-300 px-2 py-1 text-green-800">
+                          Disponible
+                        </span>
+                      </td>
+                      <td class="px-3 py-3">$15.000</td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </article>
+
+            <!-- Reminders -->
+            <article class="rounded-md border border-slate-400 bg-[#e5e9ec] p-3 dark:border-slate-600 dark:bg-slate-800">
+
+              <h2 class="mb-4 text-lg font-medium">
+                Recordatorios próximos
+              </h2>
+
+              <div class="rounded-md border border-slate-400 bg-[#e1e4e6] p-3 dark:border-slate-600 dark:bg-slate-900">
+
+                <div class="border-b border-slate-500 py-3">
+                  <div class="flex justify-between">
+                    <span>Pagar proveedor</span>
+                    <span class="text-red-600">12 AGO</span>
+                  </div>
+                </div>
+
+                <div class="border-b border-slate-500 py-3">
+                  <div class="flex justify-between">
+                    <span>Pagar factura</span>
+                    <span class="text-red-600">15 DIC</span>
+                  </div>
+                </div>
+
+                <div class="py-3">
+                  <div class="flex justify-between">
+                    <span>Renovar servicio</span>
+                    <span class="text-red-600">20 DIC</span>
+                  </div>
+                </div>
+
+                <button class="mt-8 w-full py-2 text-sm hover:bg-slate-300 dark:hover:bg-slate-800">
+                  Ver todos
+                </button>
+
+              </div>
+
+            </article>
+
+          </div>
+
+          <!-- Quick actions -->
+          <div class="mt-5 grid gap-5 md:grid-cols-2">
+
+            <article class="rounded-md border border-slate-400 bg-[#e5e9ec] p-4 dark:border-slate-600 dark:bg-slate-800">
+              <div class="flex items-center gap-4">
+                <span class="text-3xl">🛒</span>
+
+                <div>
+                  <h3 class="font-medium">Registrar venta</h3>
+                  <p class="text-sm text-slate-600 dark:text-slate-400">
+                    Registra una nueva venta y actualiza el inventario automáticamente.
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="rounded-md border border-slate-400 bg-[#e5e9ec] p-4 dark:border-slate-600 dark:bg-slate-800">
+              <div class="flex items-center gap-4">
+                <span class="text-3xl">💰</span>
+
+                <div>
+                  <h3 class="font-medium">Registrar gasto</h3>
+                  <p class="text-sm text-slate-600 dark:text-slate-400">
+                    Registra un nuevo gasto y actualiza el resumen financiero.
+                  </p>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- DASHBOARD - VACÍO -->
+        <!-- ================================================= -->
+
+        <section id="dashboard-empty" class="view hidden">
+
+          <h2 class="mb-4 text-xl font-medium">
+            Resumen de la semana
+          </h2>
+
+          <div class="mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+
+            <article class="rounded-md bg-[#c9e5bd] p-4 dark:bg-green-950">
+              <p class="text-sm">Ingresos</p>
+              <p class="mt-2 font-medium">$0</p>
+              <p class="mt-3 text-xs">Total ingresos</p>
+            </article>
+
+            <article class="rounded-md bg-[#efb8bc] p-4 dark:bg-red-950">
+              <p class="text-sm">Gastos</p>
+              <p class="mt-2 font-medium">$0</p>
+              <p class="mt-3 text-xs">Total gastos</p>
+            </article>
+
+            <article class="rounded-md bg-[#b8dce4] p-4 dark:bg-cyan-950">
+              <p class="text-sm">Ganancia</p>
+              <p class="mt-2 font-medium">$0</p>
+              <p class="mt-3 text-xs">Resultado neto</p>
+            </article>
+
+            <article class="rounded-md bg-[#e7efb7] p-4 dark:bg-yellow-950">
+              <p class="text-sm">Ventas</p>
+              <p class="mt-2 font-medium">0</p>
+              <p class="mt-3 text-xs">Ventas realizadas</p>
+            </article>
+
+          </div>
+
+          <div class="grid gap-5 lg:grid-cols-3">
+
+            <article class="flex min-h-[280px] flex-col items-center justify-center rounded-md border border-slate-400 bg-[#e5e9ec] p-6 text-center dark:border-slate-600 dark:bg-slate-800 lg:col-span-2">
+
+              <div class="mb-4 text-4xl">📦</div>
+
+              <p class="mb-2 text-lg font-medium">
+                No hay productos en tu inventario
+              </p>
+
+              <button class="rounded-sm bg-[#61aebe] px-4 py-2 text-sm text-white">
+                + Agregar producto
+              </button>
+
+            </article>
+
+            <article class="flex min-h-[280px] flex-col items-center justify-center rounded-md border border-slate-400 bg-[#e5e9ec] p-6 text-center dark:border-slate-600 dark:bg-slate-800">
+
+              <div class="mb-4 text-4xl">🔕</div>
+
+              <p class="text-sm">
+                Sin recordatorios pendientes
+              </p>
+
+              <button class="mt-8 px-4 py-2 text-sm">
+                Ver todos
+              </button>
+
+            </article>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- DASHBOARD - ERROR -->
+        <!-- ================================================= -->
+
+        <section id="dashboard-error" class="view hidden">
+
+          <h2 class="mb-4 text-xl font-medium">
+            Resumen de la semana
+          </h2>
+
+          <div class="flex min-h-[375px] flex-col items-center justify-center rounded-md border border-slate-400 bg-[#e5e9ec] text-center dark:border-slate-600 dark:bg-slate-800">
+
+            <div class="mb-4 text-5xl text-red-500">⚠</div>
+
+            <h3 class="font-bold">
+              No se pudo cargar el resumen
+            </h3>
+
+            <p class="mt-2 max-w-md text-sm text-slate-500 dark:text-slate-400">
+              Ocurrió un problema al obtener los datos.
+              Verifica tu conexión e intenta nuevamente.
+            </p>
+
+            <button class="mt-5 rounded-sm bg-[#61aebe] px-5 py-2 text-sm font-medium text-white">
+              Intentar nuevamente
+            </button>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- INVENTARIO - DATOS -->
+        <!-- ================================================= -->
+
+        <section id="inventory-data" class="view hidden">
+
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+
+            <h2 class="text-xl font-bold">
+              Inventario
+            </h2>
+
+            <div class="flex gap-2">
+
+              <input
+                type="search"
+                placeholder="Buscar producto..."
+                class="w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-sm outline-none dark:border-slate-600 dark:bg-slate-800 sm:w-64"
+              >
+
+              <button class="whitespace-nowrap rounded-sm bg-[#61aebe] px-3 py-2 text-xs text-white">
+                + Agregar producto
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="rounded-md border border-slate-400 bg-[#e5e9ec] p-3 dark:border-slate-600 dark:bg-slate-800">
+
+            <div class="overflow-x-auto rounded-md border border-slate-400 bg-[#dfe3e6] dark:border-slate-600 dark:bg-slate-900">
+
+              <table class="w-full min-w-[600px] text-sm">
+
+                <thead>
+                  <tr class="border-b border-slate-500">
+                    <th class="px-3 py-3 text-left">Producto</th>
+                    <th class="px-3 py-3 text-left">Stock</th>
+                    <th class="px-3 py-3 text-left">Estado</th>
+                    <th class="px-3 py-3 text-left">Precio</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  <tr class="border-b border-slate-400">
+                    <td class="px-3 py-5">Café</td>
+                    <td class="px-3 py-5">25</td>
+                    <td class="px-3 py-5">
+                      <span class="rounded bg-green-300 px-3 py-1 text-green-800">
+                        Disponible
+                      </span>
+                    </td>
+                    <td class="px-3 py-5">$20.000</td>
+                  </tr>
+
+                  <tr class="border-b border-slate-400">
+                    <td class="px-3 py-5">Azúcar</td>
+                    <td class="px-3 py-5">10</td>
+                    <td class="px-3 py-5">
+                      <span class="rounded bg-red-400 px-3 py-1 text-red-900">
+                        Bajo
+                      </span>
+                    </td>
+                    <td class="px-3 py-5">$5.000</td>
+                  </tr>
+
+                  <tr>
+                    <td class="px-3 py-5">Leche</td>
+                    <td class="px-3 py-5">50</td>
+                    <td class="px-3 py-5">
+                      <span class="rounded bg-green-300 px-3 py-1 text-green-800">
+                        Disponible
+                      </span>
+                    </td>
+                    <td class="px-3 py-5">$15.000</td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- INVENTARIO - VACÍO -->
+        <!-- ================================================= -->
+
+        <section id="inventory-empty" class="view hidden">
+
+          <div class="mb-4 flex items-center justify-between">
+
+            <h2 class="text-xl font-bold">
+              Inventario
+            </h2>
+
+            <div class="flex gap-2">
+
+              <input
+                type="search"
+                placeholder="Buscar producto..."
+                class="rounded-sm border-0 bg-white px-3 py-2 text-sm dark:bg-slate-800"
+              >
+
+              <button class="rounded-sm bg-[#61aebe] px-3 py-2 text-xs text-white">
+                + Agregar producto
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="flex min-h-[370px] flex-col items-center justify-center rounded-md border border-slate-400 bg-[#e5e9ec] text-center dark:border-slate-600 dark:bg-slate-800">
+
+            <div class="mb-5 text-5xl">📦</div>
+
+            <h3 class="font-bold">
+              No hay productos todavía
+            </h3>
+
+            <p class="mt-2 max-w-sm text-xs text-slate-500 dark:text-slate-400">
+              Agrega tu primer producto para comenzar a gestionar tu inventario.
+            </p>
+
+            <button class="mt-5 rounded-sm bg-[#61aebe] px-5 py-2 text-sm text-white">
+              + Agregar producto
+            </button>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- INVENTARIO - ERROR -->
+        <!-- ================================================= -->
+
+        <section id="inventory-error" class="view hidden">
+
+          <h2 class="mb-4 text-xl font-bold">
+            Inventario
+          </h2>
+
+          <div class="flex min-h-[370px] flex-col items-center justify-center rounded-md border border-slate-400 bg-[#e5e9ec] text-center dark:border-slate-600 dark:bg-slate-800">
+
+            <div class="mb-5 text-5xl text-red-500">⚠</div>
+
+            <h3 class="font-bold">
+              Error al cargar el inventario
+            </h3>
+
+            <p class="mt-2 max-w-md text-xs text-slate-500 dark:text-slate-400">
+              No pudimos conectar con el servidor.
+              Revisa tu conexión a internet e intenta de nuevo.
+            </p>
+
+            <button class="mt-5 rounded-sm bg-[#61aebe] px-5 py-2 text-sm text-white">
+              Reintentar
+            </button>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- VENTAS - DATOS -->
+        <!-- ================================================= -->
+
+        <section id="sales-data" class="view hidden">
+
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+
+            <h2 class="text-xl font-bold">
+              Ventas
+            </h2>
+
+            <div class="flex gap-2">
+
+              <input
+                type="search"
+                placeholder="Buscar venta..."
+                class="w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-800 sm:w-64"
+              >
+
+              <button class="whitespace-nowrap rounded-sm bg-[#61aebe] px-3 py-2 text-xs text-white">
+                + Registrar venta
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="rounded-md border border-slate-400 bg-[#e5e9ec] p-3 dark:border-slate-600 dark:bg-slate-800">
+
+            <div class="overflow-x-auto rounded-md border border-slate-400 bg-[#dfe3e6] dark:border-slate-600 dark:bg-slate-900">
+
+              <table class="w-full min-w-[600px] text-sm">
+
+                <thead>
+                  <tr class="border-b border-slate-500">
+                    <th class="px-3 py-3 text-left">Fecha</th>
+                    <th class="px-3 py-3 text-left">Producto</th>
+                    <th class="px-3 py-3 text-left">Cantidad</th>
+                    <th class="px-3 py-3 text-left">Total</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  <tr class="border-b border-slate-400">
+                    <td class="px-3 py-3">15/08/2026</td>
+                    <td class="px-3 py-3">Café</td>
+                    <td class="px-3 py-3">3</td>
+                    <td class="px-3 py-3">$60.000</td>
+                  </tr>
+
+                  <tr class="border-b border-slate-400">
+                    <td class="px-3 py-3">14/08/2026</td>
+                    <td class="px-3 py-3">Leche</td>
+                    <td class="px-3 py-3">2</td>
+                    <td class="px-3 py-3">$30.000</td>
+                  </tr>
+
+                  <tr class="border-b border-slate-400">
+                    <td class="px-3 py-3">14/08/2026</td>
+                    <td class="px-3 py-3">Azúcar</td>
+                    <td class="px-3 py-3">5</td>
+                    <td class="px-3 py-3">$25.000</td>
+                  </tr>
+
+                  <tr class="border-b border-slate-400">
+                    <td class="px-3 py-3">13/08/2026</td>
+                    <td class="px-3 py-3">Café</td>
+                    <td class="px-3 py-3">1</td>
+                    <td class="px-3 py-3">$20.000</td>
+                  </tr>
+
+                  <tr>
+                    <td class="px-3 py-3">12/08/2026</td>
+                    <td class="px-3 py-3">Leche</td>
+                    <td class="px-3 py-3">4</td>
+                    <td class="px-3 py-3">$60.000</td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- VENTAS - VACÍO -->
+        <!-- ================================================= -->
+
+        <section id="sales-empty" class="view hidden">
+
+          <div class="mb-4 flex items-center justify-between">
+
+            <h2 class="text-xl font-bold">
+              Ventas
+            </h2>
+
+            <div class="flex gap-2">
+
+              <input
+                type="search"
+                placeholder="Buscar venta..."
+                class="rounded-sm border-0 bg-white px-3 py-2 text-sm dark:bg-slate-800"
+              >
+
+              <button class="rounded-sm bg-[#61aebe] px-3 py-2 text-xs text-white">
+                + Registrar venta
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="flex min-h-[370px] flex-col items-center justify-center rounded-md border border-slate-400 bg-[#e5e9ec] text-center dark:border-slate-600 dark:bg-slate-800">
+
+            <div class="mb-5 text-5xl">🛒</div>
+
+            <h3 class="font-bold">
+              No hay ventas registradas
+            </h3>
+
+            <p class="mt-2 max-w-md text-xs text-slate-500 dark:text-slate-400">
+              Registra tu primera venta para comenzar a llevar el control de tus ingresos.
+            </p>
+
+            <button class="mt-5 rounded-sm bg-[#61aebe] px-5 py-2 text-sm text-white">
+              + Registrar venta
+            </button>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- VENTAS - ERROR -->
+        <!-- ================================================= -->
+
+        <section id="sales-error" class="view hidden">
+
+          <h2 class="mb-4 text-xl font-bold">
+            Ventas
+          </h2>
+
+          <div class="flex min-h-[370px] flex-col items-center justify-center rounded-md border border-slate-400 bg-[#e5e9ec] text-center dark:border-slate-600 dark:bg-slate-800">
+
+            <div class="mb-5 text-5xl text-red-500">⚠</div>
+
+            <h3 class="font-bold">
+              No pudimos cargar las ventas
+            </h3>
+
+            <p class="mt-2 max-w-md text-xs text-slate-500 dark:text-slate-400">
+              Hubo un problema al obtener los datos.
+              Verifica tu conexión e intenta nuevamente.
+            </p>
+
+            <button class="mt-5 rounded-sm bg-[#61aebe] px-5 py-2 text-sm text-white">
+              Intentar nuevamente
+            </button>
+
+          </div>
+
+        </section>
+
+      </main>
+
+      <!-- Footer -->
+      <footer class="border-t border-slate-300 bg-white px-4 py-4 text-center text-xs text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+        Proyecto académico DSAW - Universidad de La Sabana
+        <br>
+        Autor: Daniel Ortiz
+      </footer>
+
+    </div>
+  </div>
+
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+
+  <script>
+
+    /* ============================
+       CAMBIO DE VISTAS
+    ============================ */
+
+    const views = document.querySelectorAll(".view");
+    const navButtons = document.querySelectorAll(".nav-button");
+
+    function showView(viewId) {
+
+      views.forEach(function(view) {
+        view.classList.add("hidden");
+      });
+
+      const selectedView = document.getElementById(viewId);
+
+      if (selectedView) {
+        selectedView.classList.remove("hidden");
+      }
+
+      navButtons.forEach(function(button) {
+        button.classList.remove("bg-[#92278f]");
+        button.classList.add("border", "border-[#92278f]");
+      });
+
+      const activeButton = document.querySelector(
+        '[data-view="' + viewId + '"]'
+      );
+
+      if (activeButton) {
+        activeButton.classList.remove("border", "border-[#92278f]");
+        activeButton.classList.add("bg-[#92278f]");
+      }
+    }
+
+
+    /* ============================
+       NAVEGACIÓN
+    ============================ */
+
+    navButtons.forEach(function(button) {
+
+      button.addEventListener("click", function() {
+
+        const viewId = button.getAttribute("data-view");
+
+        showView(viewId);
+
+      });
+
+    });
+
+
+    /* ============================
+       DARK MODE
+    ============================ */
+
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeIcon = document.getElementById("theme-icon");
+
+    function updateThemeIcon() {
+
+      if (document.documentElement.classList.contains("dark")) {
+
+        themeIcon.textContent = "☀️";
+
+      } else {
+
+        themeIcon.textContent = "🌙";
+
+      }
+
+    }
+
+    updateThemeIcon();
+
+    themeToggle.addEventListener("click", function() {
+
+      document.documentElement.classList.toggle("dark");
+
+      const isDark =
+        document.documentElement.classList.contains("dark");
+
+      localStorage.setItem(
+        "theme",
+        isDark ? "dark" : "light"
+      );
+
+      updateThemeIcon();
+
+    });
+
+
+    /* ============================
+       VISTA INICIAL
+    ============================ */
+
+    showView("dashboard-data");
+
+  </script>
+
+</body>
+</html>
